@@ -16,6 +16,15 @@ export default {
                 'neo': '4px 4px 0px 0px rgba(0,0,0,1)',
                 'neo-lg': '8px 8px 0px 0px rgba(0,0,0,1)',
                 'neo-xl': '12px 12px 0px 0px rgba(0,0,0,1)',
+            },
+            keyframes: {
+                marquee: {
+                    '0%': { transform: 'translateX(0%)' },
+                    '100%': { transform: 'translateX(-100%)' },
+                }
+            },
+            animation: {
+                marquee: 'marquee 20s linear infinite',
             }
         },
     },

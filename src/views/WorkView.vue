@@ -103,7 +103,7 @@ onMounted(() => {
                   <span class="px-4 py-1 bg-[#FF00FF] text-white border-2 border-white font-bold uppercase text-sm">React</span>
                 </div>
                 <h2 class="text-5xl md:text-7xl font-black uppercase mb-6">Lemina</h2>
-                <p class="text-xl font-bold mb-8 text-gray-300">
+                <p class="text-xl font-bold mb-8 text-white">
                   A high-conversion e-commerce experience for a luxury fashion brand. We optimized the user journey to increase conversion rates by 200%.
                 </p>
               </div>

@@ -66,7 +66,7 @@ onMounted(() => {
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
           </div>
           <h3 class="text-4xl font-black uppercase mb-6">Product Strategy</h3>
-          <p class="text-xl font-bold mb-8 text-gray-300">
+          <p class="text-xl font-bold mb-8 text-white">
             We align technology with your business objectives to maximize ROI. We help you define your MVP, map out your roadmap, and identify the technical levers that will drive growth.
           </p>
           <ul class="space-y-4 font-bold border-t-4 border-white pt-8">
