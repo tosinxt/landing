@@ -29,7 +29,7 @@ onMounted(() => {
 
     <div class="max-w-7xl mx-auto relative z-10">
       <h1 class="text-6xl md:text-9xl font-black uppercase mb-12 text-center leading-[0.8]">
-        Start The<br><span class="text-white text-stroke-black">Re<span class="text-[#00FFFF] text-stroke-black inline-block transform rotate-12">a</span>ctor</span>
+        Start The<br><span class="text-white text-stroke-black">Re<span class="text-[#00FFFF] text-stroke-black inline-block transform font-['Rubik_Glitch']">a</span>ctor</span>
       </h1>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
