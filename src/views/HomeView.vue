@@ -7,13 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 onMounted(() => {
-  // Lenis is handled globally in App.vue, but we can keep it here if we want specific page control, 
-  // or remove it to avoid double initialization. 
-  // For now, let's remove the duplicate Lenis init to prevent conflicts, 
-  // or just keep GSAP triggers.
-  
-  // Actually, it's safer to rely on the global Lenis instance. 
-  // We'll just keep the GSAP registration.
+  // ... (existing code)
 })
 </script>
 
@@ -85,30 +79,55 @@ onMounted(() => {
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 grid-rows-auto md:grid-rows-2 gap-6 h-auto md:h-[800px]">
-          
           <!-- Box 1: Scale (Large) -->
-          <div class="md:col-span-2 md:row-span-2 bg-white p-6 md:p-10 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-between group hover:bg-[#00FFFF] transition-colors duration-300 min-h-[300px]">
-            <div class="w-16 h-16 md:w-24 md:h-24 bg-black text-white flex items-center justify-center rounded-full mb-6 md:mb-0 group-hover:rotate-12 transition-transform">
+          <div class="md:col-span-2 md:row-span-2 bg-white p-6 md:p-10 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-between group hover:bg-[#00FFFF] transition-colors duration-300 min-h-[300px] relative overflow-hidden">
+            <!-- African Pattern: Mud Cloth / Network -->
+            <div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
+               <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                 <defs>
+                   <pattern id="network-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                     <circle cx="10" cy="10" r="3" fill="currentColor"/>
+                     <circle cx="40" cy="40" r="3" fill="currentColor"/>
+                     <line x1="10" y1="10" x2="40" y2="40" stroke="currentColor" stroke-width="2"/>
+                     <line x1="40" y1="40" x2="70" y2="10" stroke="currentColor" stroke-width="2"/>
+                   </pattern>
+                 </defs>
+                 <rect width="100%" height="100%" fill="url(#network-pattern)" />
+               </svg>
+            </div>
+            <div class="w-16 h-16 md:w-24 md:h-24 bg-black text-white flex items-center justify-center rounded-full mb-6 md:mb-0 group-hover:rotate-12 transition-transform relative z-10">
               <!-- Icon: Globe/Network -->
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 md:w-12 md:h-12"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             </div>
-            <div>
+            <div class="relative z-10">
               <h3 class="text-3xl md:text-5xl font-black uppercase mb-4 leading-none">Hyper-Scale Infrastructure</h3>
               <p class="text-lg md:text-2xl font-bold opacity-80 leading-snug">
-                Engineered to handle millions of concurrent requests with zero downtime. We build systems that grow as fast as you do, ensuring your platform remains robust under any load.
+                Engineered to handle millions of concurrent requests with zero downtime. We build systems that grow as fast as you do.
               </p>
             </div>
           </div>
 
           <!-- Box 2: Security (Medium) -->
-          <div class="bg-black text-white p-6 md:p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-center gap-4 group hover:translate-x-1 md:hover:translate-x-2 transition-transform min-h-[250px]">
-            <div class="text-[#FFFF00] group-hover:scale-110 transition-transform origin-left">
+          <div class="bg-black text-white p-6 md:p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-center gap-4 group hover:translate-x-1 md:hover:translate-x-2 transition-transform min-h-[250px] relative overflow-hidden">
+            <!-- African Pattern: Shield / Geometric -->
+            <div class="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity pointer-events-none">
+               <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                 <defs>
+                   <pattern id="shield-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                     <path d="M20 0 L40 20 L20 40 L0 20 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                     <circle cx="20" cy="20" r="4" fill="currentColor"/>
+                   </pattern>
+                 </defs>
+                 <rect width="100%" height="100%" fill="url(#shield-pattern)" />
+               </svg>
+            </div>
+            <div class="text-[#FFFF00] group-hover:scale-110 transition-transform origin-left relative z-10">
               <!-- Icon: Shield -->
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:w-12 md:h-12"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <h3 class="text-2xl md:text-3xl font-black uppercase">Fortress Security</h3>
-            <p class="font-medium text-gray-300 text-sm md:text-base">
-              Enterprise-grade encryption, automated threat detection, and compliance standards baked into every line of code. Your data is untouchable.
+            <h3 class="text-2xl md:text-3xl font-black uppercase relative z-10">Fortress Security</h3>
+            <p class="font-medium text-gray-300 text-sm md:text-base relative z-10">
+              Enterprise-grade encryption, automated threat detection, and compliance standards baked into every line of code.
             </p>
           </div>
 
@@ -124,13 +143,27 @@ onMounted(() => {
             </p>
           </div>
 
+
+
         </div>
       </div>
     </section>
 
     <!-- Services Grid -->
-    <section class="py-20 md:py-32 px-4 md:px-6 bg-white border-t-4 border-black">
-      <div class="max-w-7xl mx-auto">
+    <section class="py-20 md:py-32 px-4 md:px-6 bg-white border-t-4 border-black relative overflow-hidden">
+      <!-- African Pattern Background -->
+      <div class="absolute inset-0 opacity-5 pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="african-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M0 20 L10 10 L20 20 L30 10 L40 20" stroke="black" stroke-width="2" fill="none"/>
+              <path d="M0 40 L10 30 L20 40 L30 30 L40 40" stroke="black" stroke-width="2" fill="none"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#african-pattern)" />
+        </svg>
+      </div>
+      <div class="max-w-7xl mx-auto relative z-10">
         <h2 class="text-4xl md:text-8xl font-black uppercase mb-12 md:mb-20 text-center">Core Operations</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Service 1 -->

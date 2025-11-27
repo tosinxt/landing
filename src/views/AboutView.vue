@@ -31,7 +31,7 @@ onMounted(() => {
             We Are<br><span class="text-[#FF00FF]">Nadiron</span>
           </h1>
           <p class="text-xl md:text-2xl font-bold mb-8">
-            Born in Lagos. Building for the world. We are a collective of cracked engineers, designers, and strategists obsessed with shipping high-quality software.
+            Born in Abuja. Building for the world. We are a collective of cracked engineers, designers, and strategists obsessed with shipping high-quality software.
           </p>
           <div class="bg-black text-white p-6 border-4 border-[#00FFFF] shadow-[8px_8px_0px_0px_#00FFFF] inline-block transform -rotate-2">
             <p class="text-2xl font-black uppercase">"No Fluff. Just Code."</p>
