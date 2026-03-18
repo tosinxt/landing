@@ -48,6 +48,10 @@ onMounted(() => {
           Work
           <span class="absolute -bottom-1 left-0 w-0 h-1 bg-black transition-all group-hover:w-full"></span>
         </router-link>
+        <router-link to="/events" class="hover:text-[#FF00FF] hover:-translate-y-1 transition-all relative group" active-class="text-[#FF00FF]">
+          Events
+          <span class="absolute -bottom-1 left-0 w-0 h-1 bg-black transition-all group-hover:w-full"></span>
+        </router-link>
         <router-link to="/about" class="hover:text-[#FF00FF] hover:-translate-y-1 transition-all relative group" active-class="text-[#FF00FF]">
           About
           <span class="absolute -bottom-1 left-0 w-0 h-1 bg-black transition-all group-hover:w-full"></span>
@@ -69,6 +73,7 @@ onMounted(() => {
         <router-link to="/" @click="mobileMenuOpen = false" class="text-white hover:text-[#00FFFF] hover:scale-110 transition-all">Home</router-link>
         <router-link to="/services" @click="mobileMenuOpen = false" class="text-white hover:text-[#00FFFF] hover:scale-110 transition-all">Services</router-link>
         <router-link to="/work" @click="mobileMenuOpen = false" class="text-white hover:text-[#00FFFF] hover:scale-110 transition-all">Work</router-link>
+        <router-link to="/events" @click="mobileMenuOpen = false" class="text-white hover:text-[#00FFFF] hover:scale-110 transition-all">Events</router-link>
         <router-link to="/about" @click="mobileMenuOpen = false" class="text-white hover:text-[#00FFFF] hover:scale-110 transition-all">About</router-link>
         <router-link to="/contact" @click="mobileMenuOpen = false" class="text-white hover:text-[#00FFFF] hover:scale-110 transition-all">Contact</router-link>
       </div>
