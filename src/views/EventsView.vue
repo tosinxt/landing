@@ -1,10 +1,31 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import webinarImage from '@/assets/WEBINAR.jpg'
 
-const events = ref([])
-const loading = ref(true)
-const error = ref('')
+const events = ref([
+  {
+    id: 1,
+    slug: 'crack-the-code-global-remote-tech-job',
+    title: 'Crack the Code to Global Remote Tech Job',
+    type: 'Live Webinar',
+    organizer: 'NADIRON',
+    speaker: 'TosinXt (Remote Tech Career Coach / Software Developer)',
+    date: '2026-03-28',
+    displayDate: 'Saturday, March 28th',
+    time: '6:00 PM WAT',
+    timezone: 'WAT',
+    location: 'Online (Google Meet)',
+    description:
+      'Learn the step-by-step strategy to get noticed, get interviewed, and get hired by global tech companies.',
+    bullets: [
+      'Optimize for Visibility: Make your LinkedIn and GitHub attract recruiters.',
+      'Find Hidden Remote Jobs: Discover where global companies are hiring.',
+      'Smart Outreach Strategy: How to message recruiters and hiring managers directly.',
+      'Ace the Interview: The soft skills remote companies expect.'
+    ],
+    image: 'WEBINAR'
+  }
+])
 
 const hostName = ref('')
 const hostEmail = ref('')
@@ -14,16 +35,8 @@ const hostSubmitting = ref(false)
 const hostSuccess = ref('')
 const hostError = ref('')
 
-onMounted(async () => {
-  try {
-    const res = await fetch('/api/events')
-    if (!res.ok) throw new Error('Failed to load events')
-    events.value = await res.json()
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : 'Unknown error'
-  } finally {
-    loading.value = false
-  }
+const orderedEvents = computed(() => {
+  return [...events.value].sort((a, b) => (a.date || '').localeCompare(b.date || ''))
 })
 
 const submitHostProposal = async () => {
@@ -37,21 +50,21 @@ const submitHostProposal = async () => {
 
   hostSubmitting.value = true
   try {
-    const res = await fetch('/api/event-proposals', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: hostName.value,
-        email: hostEmail.value,
-        company: hostCompany.value,
-        idea: hostIdea.value
-      })
-    })
-    const data = await res.json()
-    if (!res.ok) {
-      throw new Error(data.error || 'Failed to submit proposal')
-    }
-    hostSuccess.value = 'Got it. We will review your event proposal and get back to you.'
+    const subject = encodeURIComponent('Host Nadiron Event')
+    const body = encodeURIComponent(
+      [
+        `Name: ${hostName.value}`,
+        `Email: ${hostEmail.value}`,
+        hostCompany.value ? `Company/Community: ${hostCompany.value}` : '',
+        '',
+        'Event Idea:',
+        hostIdea.value
+      ]
+        .filter(Boolean)
+        .join('\n')
+    )
+    window.location.href = `mailto:hello@nadiron.com?subject=${subject}&body=${body}`
+    hostSuccess.value = 'Opening your email client…'
     hostName.value = ''
     hostEmail.value = ''
     hostCompany.value = ''
@@ -82,27 +95,7 @@ const submitHostProposal = async () => {
       <section class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16">
         <div class="md:col-span-2 space-y-5">
           <div
-            v-if="loading"
-            class="bg-white border-4 border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
-          >
-            <p class="font-bold text-base md:text-lg">Loading events…</p>
-          </div>
-
-          <div
-            v-else-if="error"
-            class="bg-white border-4 border-red-600 p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(220,38,38,1)]"
-          >
-            <h2 class="text-2xl md:text-3xl font-black uppercase mb-2 text-red-600">Error loading events</h2>
-            <p class="font-bold text-sm md:text-base mb-1">
-              {{ error }}
-            </p>
-            <p class="font-medium text-xs md:text-sm text-gray-700">
-              Ensure the Events API is running on <span class="font-mono">http://localhost:4000</span>.
-            </p>
-          </div>
-
-          <div
-            v-else-if="!events.length"
+            v-if="!orderedEvents.length"
             class="bg-white border-4 border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
           >
             <h2 class="text-2xl md:text-3xl font-black uppercase mb-2">No events scheduled… yet.</h2>
@@ -116,7 +109,7 @@ const submitHostProposal = async () => {
 
           <article
             v-else
-            v-for="event in events"
+            v-for="event in orderedEvents"
             :key="event.id"
             class="bg-white border-4 border-black p-5 md:p-7 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
           >
@@ -128,7 +121,7 @@ const submitHostProposal = async () => {
             </h2>
             <div class="mb-4 overflow-hidden border-4 border-black bg-[#111]">
               <img
-                v-if="event.id === 1"
+                v-if="event.image === 'WEBINAR'"
                 :src="webinarImage"
                 alt="Crack the Code to Global Remote Tech Job webinar"
                 class="w-full aspect-[16/9] object-cover"
@@ -138,7 +131,7 @@ const submitHostProposal = async () => {
               {{ event.displayDate || event.date }} • {{ event.time }} ({{ event.timezone }})
             </p>
             <p class="font-bold text-sm md:text-base mb-2">
-              {{ event.displayDate || event.date }} • {{ event.time }} ({{ event.timezone }}) • {{ event.location }}
+              {{ event.location }}
             </p>
             <p class="font-medium text-sm md:text-base mb-4">
               {{ event.description }}

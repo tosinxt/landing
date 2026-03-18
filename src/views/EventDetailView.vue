@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import webinarImage from '@/assets/WEBINAR.jpg'
 
@@ -7,7 +7,6 @@ const route = useRoute()
 const router = useRouter()
 
 const event = ref(null)
-const loading = ref(true)
 const error = ref('')
 
 const name = ref('')
@@ -16,18 +15,39 @@ const submitting = ref(false)
 const successMessage = ref('')
 const formError = ref('')
 
-onMounted(async () => {
-  try {
-    const id = route.params.id
-    const res = await fetch(`/api/events/${id}`)
-    if (!res.ok) throw new Error('Event not found')
-    event.value = await res.json()
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : 'Unknown error'
-  } finally {
-    loading.value = false
+const events = [
+  {
+    id: 1,
+    slug: 'crack-the-code-global-remote-tech-job',
+    title: 'Crack the Code to Global Remote Tech Job',
+    type: 'Live Webinar',
+    organizer: 'NADIRON',
+    speaker: 'TosinXt (Remote Tech Career Coach / Software Developer)',
+    date: '2026-03-28',
+    displayDate: 'Saturday, March 28th',
+    time: '6:00 PM WAT',
+    timezone: 'WAT',
+    location: 'Online (Google Meet)',
+    description:
+      'Learn the step-by-step strategy to get noticed, get interviewed, and get hired by global tech companies.',
+    bullets: [
+      'Optimize for Visibility: Make your LinkedIn and GitHub attract recruiters.',
+      'Find Hidden Remote Jobs: Discover where global companies are hiring.',
+      'Smart Outreach Strategy: How to message recruiters and hiring managers directly.',
+      'Ace the Interview: The soft skills remote companies expect.'
+    ],
+    image: 'WEBINAR'
   }
+]
+
+const resolvedEvent = computed(() => {
+  const id = Number(route.params.id)
+  if (!Number.isFinite(id)) return null
+  return events.find((e) => e.id === id) || null
 })
+
+event.value = resolvedEvent.value
+if (!event.value) error.value = 'Event not found'
 
 const handleSubmit = async () => {
   formError.value = ''
@@ -40,18 +60,8 @@ const handleSubmit = async () => {
 
   submitting.value = true
   try {
-    const res = await fetch(`/api/events/${route.params.id}/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.value, email: email.value })
-    })
-
-    const data = await res.json()
-    if (!res.ok) {
-      throw new Error(data.error || 'Registration failed')
-    }
-
-    successMessage.value = 'Registration complete. Check your email for details (mock).'
+    await new Promise((r) => setTimeout(r, 600))
+    successMessage.value = 'Registration complete (mock). We will email you the details.'
     name.value = ''
     email.value = ''
   } catch (e) {
@@ -72,12 +82,8 @@ const handleSubmit = async () => {
         ← Back
       </button>
 
-      <div v-if="loading" class="bg-white border-4 border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-        <p class="font-bold text-base md:text-lg">Loading event…</p>
-      </div>
-
       <div
-        v-else-if="error || !event"
+        v-if="error || !event"
         class="bg-white border-4 border-red-600 p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(220,38,38,1)]"
       >
         <h1 class="text-2xl md:text-3xl font-black uppercase mb-2 text-red-600">Event not available</h1>
@@ -91,7 +97,7 @@ const handleSubmit = async () => {
         class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start"
       >
         <article class="md:col-span-2 bg-white border-4 border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <div class="mb-5 overflow-hidden border-4 border-black bg-[#111]">
+          <div v-if="event.image === 'WEBINAR'" class="mb-5 overflow-hidden border-4 border-black bg-[#111]">
             <img
               :src="webinarImage"
               alt="Crack the Code to Global Remote Tech Job webinar"
